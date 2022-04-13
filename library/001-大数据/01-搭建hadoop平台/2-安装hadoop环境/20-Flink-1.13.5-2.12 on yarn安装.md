@@ -1,0 +1,386 @@
+# <font color=#C71585>Flink-1.13.5-2.12 on yarn安装</font>
+>维护人员：**高俊**  
+>创建时间：2022-04-12
+
+## 下载安装包
+
+https://flink.apache.org/zh/downloads.html
+
+| 主机名     | Master-8081    | slave |
+| :-------------: | :-------------: | :-------------: |
+| hadoop001      | ✖      | ✔ |
+| hadoop002      | ✔      | ✔ |
+| hadoop003      | ✔      | ✔ |
+
+## 解压安装包
+```
+[hadoop@hadoop001 software]$ tar -xvf /opt/software/flink-1.13.5-bin-scala_2.12.tgz -C /opt/module/
+```
+## 3台机器均增加yarn的HADOOP_CLASSPATH配置
+```
+[hadoop@hadoop003 module]$ sudo vim /etc/profile.d/my_env.sh
+```
+```
+#HADOOP_HOME
+export HADOOP_CLASSPATH=`hadoop classpath`
+```
+```
+[hadoop@ hadoop003 module]$ source /etc/profile
+[hadoop@ hadoop003 module]$ echo $HADOOP_CLASSPATH
+```
+## 配置环境变量
+```
+[hadoop@hadoop003 module]$ sudo vim /etc/profile.d/my_env.sh
+```
+```
+#flink
+export FLINK_HOME=/opt/module/flink-1.13.5
+export PATH=$PATH:$KE_HOME/bin
+```
+```
+[hadoop@ hadoop003 module]$ source /etc/profile
+```
+## hdfs新建文件夹
+```
+flink/ha/
+flink/checkpoints/
+flink/savepoints/
+```
+## 配置文件修改
+**zoo.cfg**
+```
+################################################################################
+#  Licensed to the Apache Software Foundation (ASF) under one
+#  or more contributor license agreements.  See the NOTICE file
+#  distributed with this work for additional information
+#  regarding copyright ownership.  The ASF licenses this file
+#  to you under the Apache License, Version 2.0 (the
+#  "License"); you may not use this file except in compliance
+#  with the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+# limitations under the License.
+################################################################################
+
+# The number of milliseconds of each tick
+tickTime=2000
+
+# The number of ticks that the initial  synchronization phase can take
+initLimit=10
+
+# The number of ticks that can pass between  sending a request and getting an acknowledgement
+syncLimit=5
+
+# The directory where the snapshot is stored.
+# dataDir=/tmp/zookeeper
+
+# The port at which the clients will connect
+clientPort=2181
+
+# ZooKeeper quorum peers
+server.1=hadoop001:2888:3888
+server.2=hadoop002:2888:3888
+server.3=hadoop003:2888:3888
+```
+**flink-conf**
+```
+################################################################################
+#  Licensed to the Apache Software Foundation (ASF) under one
+#  or more contributor license agreements.  See the NOTICE file
+#  distributed with this work for additional information
+#  regarding copyright ownership.  The ASF licenses this file
+#  to you under the Apache License, Version 2.0 (the
+#  "License"); you may not use this file except in compliance
+#  with the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+# limitations under the License.
+################################################################################
+
+
+#==============================================================================
+# Common
+#==============================================================================
+
+# The external address of the host on which the JobManager runs and can be
+# reached by the TaskManagers and any clients which want to connect. This setting
+# is only used in Standalone mode and may be overwritten on the JobManager side
+# by specifying the --host <hostname> parameter of the bin/jobmanager.sh executable.
+# In high availability mode, if you use the bin/start-cluster.sh script and setup
+# the conf/masters file, this will be taken care of automatically. Yarn/Mesos
+# automatically configure the host name based on the hostname of the node where the
+# JobManager runs.
+
+jobmanager.rpc.address: hadoop003
+
+# The RPC port where the JobManager is reachable.
+
+jobmanager.rpc.port: 6123
+
+
+# The total process memory size for the JobManager.
+#
+# Note this accounts for all memory usage within the JobManager process, including JVM metaspace and other overhead.
+
+jobmanager.memory.process.size: 1600m
+
+
+# The total process memory size for the TaskManager.
+#
+# Note this accounts for all memory usage within the TaskManager process, including JVM metaspace and other overhead.
+
+taskmanager.memory.process.size: 1728m
+
+# To exclude JVM metaspace and overhead, please, use total Flink memory size instead of 'taskmanager.memory.process.size'.
+# It is not recommended to set both 'taskmanager.memory.process.size' and Flink memory.
+#
+# taskmanager.memory.flink.size: 1280m
+
+# The number of task slots that each TaskManager offers. Each slot runs one parallel pipeline.
+
+taskmanager.numberOfTaskSlots: 4
+
+# The parallelism used for programs that did not specify and other parallelism.
+
+parallelism.default: 2
+
+# The default file system scheme and authority.
+#
+# By default file paths without scheme are interpreted relative to the local
+# root file system 'file:///'. Use this to override the default and interpret
+# relative paths relative to a different file system,
+# for example 'hdfs://mynamenode:12345'
+#
+# fs.default-scheme
+
+#==============================================================================
+# High Availability
+#==============================================================================
+
+# The high-availability mode. Possible options are 'NONE' or 'zookeeper'.
+#
+# high-availability: zookeeper
+high-availability: zookeeper
+
+# The path where metadata for master recovery is persisted. While ZooKeeper stores
+# the small ground truth for checkpoint and leader election, this location stores
+# the larger objects, like persisted dataflow graphs.
+#
+# Must be a durable file system that is accessible from all nodes
+# (like HDFS, S3, Ceph, nfs, ...)
+#
+# high-availability.storageDir: hdfs:///flink/ha/
+high-availability.storageDir: hdfs://x6mccluster:8020/flink/ha/
+
+# The list of ZooKeeper quorum peers that coordinate the high-availability
+# setup. This must be a list of the form:
+# "host1:clientPort,host2:clientPort,..." (default clientPort: 2181)
+#
+# high-availability.zookeeper.quorum: localhost:2181
+high-availability.zookeeper.quorum: hadoop001:2181,hadoop002:2181,hadoop003:2181
+
+# ACL options are based on https://zookeeper.apache.org/doc/r3.1.2/zookeeperProgrammers.html#sc_BuiltinACLSchemes
+# It can be either "creator" (ZOO_CREATE_ALL_ACL) or "open" (ZOO_OPEN_ACL_UNSAFE)
+# The default value is "open" and it can be changed to "creator" if ZK security is enabled
+#
+# high-availability.zookeeper.client.acl: open
+
+#==============================================================================
+# Fault tolerance and checkpointing
+#==============================================================================
+
+# The backend that will be used to store operator state checkpoints if
+# checkpointing is enabled.
+#
+# Supported backends are 'jobmanager', 'filesystem', 'rocksdb', or the
+# <class-name-of-factory>.
+#
+# state.backend: filesystem
+state.backend: filesystem
+
+# Directory for checkpoints filesystem, when using any of the default bundled
+# state backends.
+#
+# state.checkpoints.dir: hdfs://namenode-host:port/flink-checkpoints
+state.checkpoints.dir: hdfs://x6mccluster:8020/flink/checkpoints
+
+
+# Default target directory for savepoints, optional.
+#
+# state.savepoints.dir: hdfs://namenode-host:port/flink-savepoints
+state.savepoints.dir: hdfs://x6mccluster:8020/flink/savepoints
+
+# Flag to enable/disable incremental checkpoints for backends that
+# support incremental checkpoints (like the RocksDB state backend).
+#
+# state.backend.incremental: false
+
+# The failover strategy, i.e., how the job computation recovers from task failures.
+# Only restart tasks that may have been affected by the task failure, which typically includes
+# downstream tasks and potentially upstream tasks if their produced data is no longer available for consumption.
+
+jobmanager.execution.failover-strategy: region
+
+#==============================================================================
+# Rest & web frontend
+#==============================================================================
+
+# The port to which the REST client connects to. If rest.bind-port has
+# not been specified, then the server will bind to this port as well.
+#
+#rest.port: 8081
+
+# The address to which the REST client will connect to
+#
+#rest.address: 0.0.0.0
+
+# Port range for the REST and web server to bind to.
+#
+#rest.bind-port: 8080-8090
+
+# The address that the REST & web server binds to
+#
+#rest.bind-address: 0.0.0.0
+
+# Flag to specify whether job submission is enabled from the web-based
+# runtime monitor. Uncomment to disable.
+
+#web.submit.enable: false
+
+#==============================================================================
+# Advanced
+#==============================================================================
+
+# Override the directories for temporary files. If not specified, the
+# system-specific Java temporary directory (java.io.tmpdir property) is taken.
+#
+# For framework setups on Yarn or Mesos, Flink will automatically pick up the
+# containers' temp directories without any need for configuration.
+#
+# Add a delimited list for multiple directories, using the system directory
+# delimiter (colon ':' on unix) or a comma, e.g.:
+#     /data1/tmp:/data2/tmp:/data3/tmp
+#
+# Note: Each directory entry is read from and written to by a different I/O
+# thread. You can include the same directory multiple times in order to create
+# multiple I/O threads against that directory. This is for example relevant for
+# high-throughput RAIDs.
+#
+# io.tmp.dirs: /tmp
+
+# The classloading resolve order. Possible values are 'child-first' (Flink's default)
+# and 'parent-first' (Java's default).
+#
+# Child first classloading allows users to use different dependency/library
+# versions in their application than those in the classpath. Switching back
+# to 'parent-first' may help with debugging dependency issues.
+#
+# classloader.resolve-order: child-first
+
+# The amount of memory going to the network stack. These numbers usually need
+# no tuning. Adjusting them may be necessary in case of an "Insufficient number
+# of network buffers" error. The default min is 64MB, the default max is 1GB.
+#
+# taskmanager.memory.network.fraction: 0.1
+# taskmanager.memory.network.min: 64mb
+# taskmanager.memory.network.max: 1gb
+
+#==============================================================================
+# Flink Cluster Security Configuration
+#==============================================================================
+
+# Kerberos authentication for various components - Hadoop, ZooKeeper, and connectors -
+# may be enabled in four steps:
+# 1. configure the local krb5.conf file
+# 2. provide Kerberos credentials (either a keytab or a ticket cache w/ kinit)
+# 3. make the credentials available to various JAAS login contexts
+# 4. configure the connector to use JAAS/SASL
+
+# The below configure how Kerberos credentials are provided. A keytab will be used instead of
+# a ticket cache if the keytab path and principal are set.
+
+# security.kerberos.login.use-ticket-cache: true
+# security.kerberos.login.keytab: /path/to/kerberos/keytab
+# security.kerberos.login.principal: flink-user
+
+# The configuration below defines which JAAS login contexts
+
+# security.kerberos.login.contexts: Client,KafkaClient
+
+#==============================================================================
+# ZK Security Configuration
+#==============================================================================
+
+# Below configurations are applicable if ZK ensemble is configured for security
+
+# Override below configuration to provide custom ZK service name if configured
+# zookeeper.sasl.service-name: zookeeper
+
+# The configuration below must match one of the values set in "security.kerberos.login.contexts"
+# zookeeper.sasl.login-context-name: Client
+
+#==============================================================================
+# HistoryServer
+#==============================================================================
+
+# The HistoryServer is started and stopped via bin/historyserver.sh (start|stop)
+
+# Directory to upload completed jobs to. Add this directory to the list of
+# monitored directories of the HistoryServer as well (see below).
+jobmanager.archive.fs.dir: hdfs://x6mccluster:8020/flink/completed-jobs/
+
+# The address under which the web-based HistoryServer listens.
+historyserver.web.address: hadoop003
+
+# The port under which the web-based HistoryServer listens.
+historyserver.web.port: 8082
+
+# Comma separated list of directories to monitor for completed jobs.
+historyserver.archive.fs.dir: hdfs://x6mccluster:8020/flink/completed-jobs/
+
+# Interval in milliseconds for refreshing the monitored directories.
+historyserver.archive.fs.refresh-interval: 10000
+
+#==============================================================================
+# flink-web
+#==============================================================================
+classloader.resolve-order: parent-first
+```
+**workers**
+```
+hadoop001
+hadoop002
+hadoop003
+```
+
+**masters**
+```
+hadoop002
+hadoop003
+```
+## 分发至所有机器
+```
+[hadoop@test-hadoop003 flink-1.13.5]$ xsync conf/
+```
+## 启动HA集群
+```
+[hadoop@test-hadoop003 bin]$ ./start-cluster.sh
+```
+```
+遇到下面的问题，停掉集群./stop-cluster.sh，然后到对应机器的/tmp目录下删除对应的pid文件
+[INFO] 1 instance(s) of taskexecutor are already running on node-1.hadoop.com.
+```
+## Flink on Yarn启动模式
+https://nightlies.apache.org/flink/flink-docs-release-1.13/zh/docs/deployment/resource-providers/yarn/
+## 下载所需要的依赖
+https://repo.maven.apache.org/maven2/org/apache/flink/
