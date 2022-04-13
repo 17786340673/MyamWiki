@@ -68,9 +68,9 @@ maxClientCnxns=300
 # Purge task interval in hours
 # Set to "0" to disable auto purge feature
 #autopurge.purgeInterval=1
-server.1=192.168.20.201:2888:3888
-server.2=192.168.20.202:2888:3888
-server.3=192.168.20.203:2888:3888
+server.1=hadoop001:2888:3888
+server.2=hadoop002:2888:3888
+server.3=hadoop003:2888:3888
 ```
 
 ##	在data目录下新建myid，与配置一致即可
