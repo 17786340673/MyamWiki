@@ -11,7 +11,7 @@
 <!-- jdbc 连接的 URL -->
    <property>
        <name>javax.jdo.option.ConnectionURL</name>
-       <value>jdbc:mysql://192.168.1.77:3306/hive?useSSL=false&amp;createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=UTF-8</value>
+       <value>jdbc:mysql://域名:端口/hive?useSSL=false&amp;createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=UTF-8</value>
    </property>
 <!-- jdbc 连接的 Driver-->
    <property>
@@ -21,7 +21,7 @@
 <!-- jdbc 连接的 username-->
    <property>
        <name>javax.jdo.option.ConnectionUserName</name>
-       <value>root</value>
+       <value>用户名</value>
    </property>
 <!-- jdbc 连接的 password -->
    <property>

@@ -163,7 +163,7 @@ cluster3.efak.ssl.cgroup.topics=
 # kafka mysql jdbc driver address
 ######################################
 efak.driver=com.mysql.cj.jdbc.Driver
-efak.url=jdbc:mysql://192.168.1.77:3306/efka?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+efak.url=jdbc:mysql://端口:port/efka?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
 efak.username=用户名
 efak.password=密码
 ```

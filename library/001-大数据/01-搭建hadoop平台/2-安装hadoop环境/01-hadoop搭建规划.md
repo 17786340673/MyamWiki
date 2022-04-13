@@ -54,5 +54,5 @@
 | hive | HiveMetaStore | HiveMetaStore | 9083 | 元数据服务 | ✖ | ✖ | http://hadoop003:9083 |
 | hive | HiveServer2 | HiveServer2 | 10000 | jdbc连接服务 | ✖ | ✖ | http://hadoop003:10000 |
 | hive | HiveServer2-web | HiveServer2 | 10002 | http服务端口 | ✖ | ✖ | http://hadoop003:10002 |
-| Hue | Hue | Hue | 8888 | http服务端口 | http://192.168.20.181:8888/hue | ✖ | ✖ |
-| dolphinscheduler | apiServerPort | apiServerPort | 12345 | http服务端口 | ✖ | http://192.168.20.182:12345/dolphinscheduler | ✖ |
+| Hue | Hue | Hue | 8888 | http服务端口 | http://Hadoop001:8888/hue | ✖ | ✖ |
+| dolphinscheduler | apiServerPort | apiServerPort | 12345 | http服务端口 | ✖ | http://hadoop002:12345/dolphinscheduler | ✖ |
