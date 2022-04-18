@@ -39,20 +39,21 @@
         - [停止hadoop集群](?file=001-大数据/01-搭建hadoop平台/3-启动hadoop/03-停止hadoop集群 "停止hadoop集群")
         - [启动hadoop集群](?file=001-大数据/01-搭建hadoop平台/3-启动hadoop/04-启动hadoop集群 "启动hadoop集群")
 - **hadoop**
-    - [操作命令](?file=001-大数据/02-hadoop/01-操作命令 "操作命令")
+    - [操作命令](?file=001-大数据/02-hadoop/1-操作命令 "操作命令")
 - **SHELL**
     - [系统命令](?file=001-大数据/03-SHELL/1-系统命令 "系统命令")
     - [常用脚本](?file=001-大数据/03-SHELL/2-常用脚本 "常用脚本")
 - **kafka**
-    - [kafka-操作命令](?file=001-大数据/04-kafka/1-kafka-操作命令 "kafka-操作命令")
+    - [操作命令](?file=001-大数据/04-kafka/1-操作命令 "操作命令")
 - **zookeeper**
-    - [zookeeper-操作命令](?file=001-大数据/05-zookeeper/01-zookeeper-操作命令 "zookeeper-操作命令")
-
-##### 面试
-- **hadoop**
-    - [hadoop-存储类HDFS](?file=002-面试/01-hadoop/1-hadoop-存储类HDFS "hadoop-存储类HDFS")
-    - [hadoop-计算框架&#40;MapReduce&#41;](?file=002-面试/01-hadoop/2-hadoop-计算框架&#40;MapReduce&#41; "hadoop-计算框架&#40;MapReduce&#41;")
-    - [hadoop-资源调度框架&#40;yarn&#41;](?file=002-面试/01-hadoop/3-hadoop-资源调度框架&#40;yarn&#41; "hadoop-资源调度框架&#40;yarn&#41;")
+    - [操作命令](?file=001-大数据/05-zookeeper/1-操作命令 "操作命令")
 - **hive**
-    - [hive-机制](?file=002-面试/02-hive/01-hive-机制 "hive-机制")
-    - [hive-数仓建设](?file=002-面试/02-hive/02-hive-数仓建设 "hive-数仓建设")
+
+##### Interview
+- **hadoop**
+    - [hadoop-存储类HDFS](?file=002-Interview/01-hadoop/1-hadoop-存储类HDFS "hadoop-存储类HDFS")
+    - [hadoop-计算框架&#40;MapReduce&#41;](?file=002-Interview/01-hadoop/2-hadoop-计算框架&#40;MapReduce&#41; "hadoop-计算框架&#40;MapReduce&#41;")
+    - [hadoop-资源调度框架&#40;yarn&#41;](?file=002-Interview/01-hadoop/3-hadoop-资源调度框架&#40;yarn&#41; "hadoop-资源调度框架&#40;yarn&#41;")
+- **hive**
+    - [hive-机制](?file=002-Interview/02-hive/01-hive-机制 "hive-机制")
+    - [hive-数仓建设](?file=002-Interview/02-hive/02-hive-数仓建设 "hive-数仓建设")

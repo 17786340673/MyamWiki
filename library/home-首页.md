@@ -45,7 +45,7 @@
 | :-------------: | :-------------: | :------------- |
 | 美国虚拟地址生成       | 美国地址生成器       | https://www.meiguodizhi.com/       |
 | 代码优化       | 代码优化       | http://codeinword.com/       |
-| Cron表达式       | 在线Cron表达式生成器       | http://codeinword.com/       |
+| Cron表达式       | 在线Cron表达式生成器       | https://qqe2.com/cron       |
 
 #### 站内javaScipt
 ```js
