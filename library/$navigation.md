@@ -44,6 +44,9 @@
     - [hadoop-存储类HDFS](?file=002-面试/01-hadoop/1-hadoop-存储类HDFS "hadoop-存储类HDFS")
     - [hadoop-计算框架&#40;MapReduce&#41;](?file=002-面试/01-hadoop/2-hadoop-计算框架&#40;MapReduce&#41; "hadoop-计算框架&#40;MapReduce&#41;")
     - [hadoop-资源调度框架&#40;yarn&#41;](?file=002-面试/01-hadoop/3-hadoop-资源调度框架&#40;yarn&#41; "hadoop-资源调度框架&#40;yarn&#41;")
+- **hive**
+    - [hive-机制](?file=002-面试/02-hive/01-hive-机制 "hive-机制")
+    - [hive-数仓建设](?file=002-面试/02-hive/02-hive-数仓建设 "hive-数仓建设")
 
 ##### hadoop
 - [Hadoop运行原理总结](?file=004-hadoop/01-Hadoop运行原理总结 "Hadoop运行原理总结")
