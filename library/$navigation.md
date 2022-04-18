@@ -38,6 +38,15 @@
         - [hive初始化启动](?file=001-大数据/01-搭建hadoop平台/3-启动hadoop/02-hive初始化启动 "hive初始化启动")
         - [停止hadoop集群](?file=001-大数据/01-搭建hadoop平台/3-启动hadoop/03-停止hadoop集群 "停止hadoop集群")
         - [启动hadoop集群](?file=001-大数据/01-搭建hadoop平台/3-启动hadoop/04-启动hadoop集群 "启动hadoop集群")
+- **hadoop**
+    - [操作命令](?file=001-大数据/02-hadoop/01-操作命令 "操作命令")
+- **SHELL**
+    - [系统命令](?file=001-大数据/03-SHELL/1-系统命令 "系统命令")
+    - [常用脚本](?file=001-大数据/03-SHELL/2-常用脚本 "常用脚本")
+- **kafka**
+    - [kafka-操作命令](?file=001-大数据/04-kafka/1-kafka-操作命令 "kafka-操作命令")
+- **zookeeper**
+    - [zookeeper-操作命令](?file=001-大数据/05-zookeeper/01-zookeeper-操作命令 "zookeeper-操作命令")
 
 ##### 面试
 - **hadoop**
