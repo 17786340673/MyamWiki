@@ -35,6 +35,7 @@
 | Elasticsearch       | es的基本原理和操作文档       | https://blog.csdn.net/wanbf123/article/details/81504097       |
 | RocketMQ       | RocketMQ在面试中那些常见问题及答案+汇总       | https://www.cnblogs.com/SparkMore/p/13343586.html       |
 | JavaScript       | js代码在线转换       | http://tool.chinaz.com/js.aspx       |
+| github       | 访问github卡顿       | https://zhuanlan.zhihu.com/p/368485412       |
 | 书籍       | 计算机类书籍整理       | https://github.com/iCSToCS/CSBook       |
 | 书籍       | java书籍       | http://www.java1234.com/       |
 | 书籍       | coding书籍       | https://www.codingdict.com/       |
