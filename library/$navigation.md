@@ -48,9 +48,6 @@
     - [hive-机制](?file=002-面试/02-hive/01-hive-机制 "hive-机制")
     - [hive-数仓建设](?file=002-面试/02-hive/02-hive-数仓建设 "hive-数仓建设")
 
-##### hadoop
-- [Hadoop运行原理总结](?file=004-hadoop/01-Hadoop运行原理总结 "Hadoop运行原理总结")
-
 ##### 学习amWiki
 - [amWiki轻文库简介](?file=998-学习amWiki/01-amWiki轻文库简介 "amWiki轻文库简介")
 - [amWiki功能导图](?file=998-学习amWiki/02-amWiki功能导图 "amWiki功能导图")

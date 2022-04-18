@@ -20,6 +20,7 @@
 | 官网       | kafka       | https://kafka.apache.org/       |
 | 官网       | flink-streaming-platform-web       | https://github.com/zhp8341/flink-streaming-platform-web       |
 | 官网       | hue       | https://gethue.com/       |
+| 官网       | echarts       | https://echarts.apache.org/zh/index.html       |
 | 官网       | Elasticsearch       | https://www.elastic.co/cn/       |
 | 官网       | Elasticsearch中文社区       | https://elasticsearch.cn/       |
 
